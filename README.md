@@ -21,16 +21,22 @@ Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
 
 ## Ruby - the original implementation
-
 Ruby is my personal goto language when I want to explore a concept and implement
-something quickly.  It combines a well thought through (although admittedely
+something quickly.  It combines a well thought through (although admittedly
 slightly quirky) syntax with a very powerful object library.  As a result
 you can write in a single line what in other languages such as Java would
 probably be many lines of code.
 
+Ruby is interpreted.  Part of Ruby's power comes from the fact that it is a
+strongly typed, but dynamically type checked language.  The downside to this
+approach is that the language is quite slow.  Also, to make the language
+thread-safe, the Ruby standard interpreter has the global interpreter lock
+which ensures only one thread executes at a time, even when running on a
+multi-core machine.
+
 The implementation can be found in the [ruby](ruby/hamiltonian.rb) directory.
 When I originally constructed the problem I actually created a neighbour's graph
-for the whole mainland USA (excluding Alaska and Hawaii).  However, it took to
+for the whole mainland USA (excluding Alaska and Hawaii).  However, it took too
 long to run, so I wrote some code to reduce the graph to the Eastern half.
 I have left it in, as it helps explore a language and its ability to manipulate
 hash maps and lists.
@@ -53,8 +59,21 @@ Strengths or Ruby:
 
 Weaknesses:
 - Slow
-- Poor support for parallel execution - the Ruby standard interpreter has the
-  global interpreter lock which ensures only one thread executes at a time,
-  even when running on a multi-core machine.
+- Poor support for parallel execution -
 
 ## Crystal
+[Crystal](https://crystal-lang.org/) is a new language inspired by Ruby.  It aims
+to provide a syntax that is similar to Ruby without being absolutely compatible.
+
+The main difference to Ruby is that the language is compiled.  It is also statically
+typed.  An interesting aspect of the language is that the compiler will reason about
+what type a variable can be.  This means that in many instances the compiler is
+able to guess the permissible types for a variable without the programmer
+needing to spell this out.
+
+The language has inbuilt support for concurrency using the
+[Communicating Sequential Processes](https://en.wikipedia.org/wiki/Communicating_sequential_processes) model.
+Unfortunately, under the wraps execution is still single threaded.
+
+Because it is a recent language, there is less support.  In particular, there
+is currently no debugger available.
