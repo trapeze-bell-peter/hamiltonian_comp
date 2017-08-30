@@ -13,7 +13,7 @@ then required to fill out the blanks.  None of the attendees had written Ruby
 before.
 
 More recently, we have started looking at implementing more modern versions of
-our key algorithsm.  Before embarking on this, I wanted to explore the suitability
+our key algorithms.  Before embarking on this, I wanted to explore the suitability
 of some of the more modern languages.  This repository captures our investigation.
 This is not the most scientific language comparison, but nonetheless is interesting.
 
@@ -53,13 +53,14 @@ $
 
 Strengths or Ruby:
 - Expressive language
+- Pure OO - everything is an object
 - Widely used
 - Mature
 - Good debuggers available
 
 Weaknesses:
 - Slow
-- Poor support for parallel execution -
+- Poor support for parallel execution
 
 ## Crystal
 [Crystal](https://crystal-lang.org/) is a new language inspired by Ruby.  It aims
