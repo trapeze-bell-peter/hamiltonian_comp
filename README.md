@@ -73,10 +73,35 @@ needing to spell this out.
 
 The language has inbuilt support for concurrency using the
 [Communicating Sequential Processes](https://en.wikipedia.org/wiki/Communicating_sequential_processes) model.
-Unfortunately, under the wraps execution is still single threaded.
+Unfortunately, under the wraps execution is still single threaded.  There is
+an experimental branch in the Github repository that has true multi-threaded support.
 
-Because it is a recent language, there is less support.  In particular, there
-is currently no debugger available.
+Because it is a recent language, there is less tool support.  In particular, there
+is currently limited debugging available.
+
+```console
+# crystal build hamiltonian.cr
+# time ./hamiltonian
+complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+
+real	0m0.239s
+user	0m0.231s
+sys	0m0.004s
+```
+This shows the language is pretty fast.
+
+Strengths or Crystal:
+- Expressive language
+- Pure OO - everything is an object
+- Very fast
+
+Weaknesses:
+- Small community so less support
+- Tool chain still in development
+- For now, true multi-threaded behaviour is experimental
+
+
+
 ## Elixir
 [Elixir](https://elixir-lang.org/) is a functional programming language based
 on Erlang.  Its syntax is rubyesque.  Key features of functional programming
