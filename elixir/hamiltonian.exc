@@ -1,0 +1,114 @@
+defmodule Hamiltonian do
+  # Allows us to reduce the graph given a list of states.
+  def reduce_graph(states_graph, states_to_visit ) do
+    states_to_remove = Map.keys(states_graph) -- states_to_visit
+    Map.drop(states_graph, states_to_remove) |> remove_neighbours(states_to_visit, states_to_remove)
+  end
+
+  # Final case of recursive remove_neighbours.  Pattern matching at work.
+  defp remove_neighbours(_, [], _) do
+    %{}
+  end
+
+  # Recursively remove unwanted states from the state graph.
+  defp remove_neighbours(states_graph, [state|rest_of_states], states_to_remove) do
+    Map.put(remove_neighbours(states_graph, rest_of_states, states_to_remove), state, states_graph[state] -- states_to_remove)
+  end
+
+  # Entry point for the recursive graph search.  Note for Elixir this is a
+  # completely separate function from the following two functions as Elixir
+  # takes account of the number of parameters when matching function calls.
+  def find_hamiltonian(states_graph, start) do
+    find_hamiltonian(states_graph, [start], Map.keys(states_graph) |> List.delete(start) )
+  end
+
+  # Find a hamiltonian cycle recursively.  Function returns true
+  # if a cycle has been found
+  defp find_hamiltonian(states_graph, journey, unvisited) do
+    v1 = states_graph[hd(journey)] -- unvisited
+    to_visit = states_graph[hd(journey)] -- v1
+    visit_neighbours(states_graph, to_visit, journey, unvisited)
+  end
+
+  # Tail recursion case of having found a valid journey.
+  defp visit_neighbours(_, _, journey, []) do
+    IO.puts "Solution: #{inspect Enum.reverse(journey)}"
+    true
+  end
+
+  # Tail recursion case of having failed to find a valid journey.  Recurse
+  # back to find an alternative.
+  defp visit_neighbours(_, [], _, _) do
+    false
+  end
+
+  # Normal recursive case.  Apply find Hamiltionian to each neighbour in turn
+  # until we find an overall solution.  If none is found this will return with
+  # a False.
+  defp visit_neighbours(states_graph, neighbours, journey, unvisited) do
+    Enum.any?(neighbours, fn(nxt) -> find_hamiltonian(states_graph, [nxt|journey], List.delete(unvisited, nxt)) end)
+  end
+
+  def usa do
+    %{
+      :wa => [ :or, :id],
+      :or => [ :wa, :id, :nv, :ca],
+      :ca => [ :or, :nv, :az ],
+      :id => [ :wa, :or, :nv, :ut, :wy, :mt ],
+      :nv => [ :or, :ca, :az, :ut, :id],
+      :ut => [ :id, :nv, :az, :co, :wy ],
+      :az => [ :ca, :nv, :ut, :nm ],
+      :mt => [ :id, :wy, :sd, :nd ],
+      :wy => [ :mt, :id, :ut, :co, :ne, :sd ],
+      :co => [ :wy, :ut, :nm, :ok, :ks, :ne ],
+      :nm => [ :co, :az, :tx, :ok ],
+      :nd => [ :mt, :sd, :mn ],
+      :sd => [ :nd, :mt, :wy, :ne, :ia, :mn],
+      :ne => [ :sd, :wy, :co, :ks, :mo, :ia],
+      :ks => [ :ne, :co, :ok, :mo ],
+      :ok => [ :ks, :co, :nm, :tx, :ar, :mo ],
+      :tx => [ :ok, :nm, :la, :ar ],
+      :mn => [ :nd, :sd, :ia, :wi ],
+      :ia => [ :mn, :sd, :ne, :mo, :il, :wi ],
+      :mo => [ :ia, :ne, :ks, :ok, :ar, :tn, :ky, :il ],
+      :ar => [ :mo, :ok, :tx, :la, :ms, :tn ],
+      :la => [ :ar, :tx, :ms ],
+      :wi => [ :mn, :ia, :il ],
+      :il => [ :wi, :ia, :mo, :ky, :in ],
+      :tn => [ :ky, :mo, :ar, :ms, :al, :ga, :nc, :va, :ky ],
+      :ms => [ :tn, :ar, :la, :al, :tn ],
+      :mi => [ :in, :oh ],
+      :in => [ :mi, :il, :ky, :oh ],
+      :ky => [ :oh, :in, :il, :mo, :tn, :va, :wv, :oh ],
+      :al => [ :tn, :ms, :fl, :ga ],
+      :ga => [ :nc, :tn, :al, :fl, :sc ],
+      :oh => [ :mi, :in, :ky, :wv, :pa ],
+      :wv => [ :pa, :oh, :ky, :va, :md ],
+      :ny => [ :pa, :nj, :ct, :ma, :vt ],
+      :nj => [ :ny, :pa, :de ],
+      :pa => [ :ny, :nj, :oh, :wv, :md, :de ],
+      :va => [ :md, :wv, :ky, :tn, :nc, :wdc ],
+      :nc => [ :va, :tn, :ga, :sc ],
+      :sc => [ :nc, :ga ],
+      :fl => [ :ga, :al ],
+      :me => [ :nh ],
+      :nh => [ :me, :vt, :ma ],
+      :vt => [ :nh, :ny, :ma ],
+      :ma => [ :nh, :vt, :ny, :ct, :ri ],
+      :ct => [ :ma, :ny, :ri ],
+      :ri => [ :ma, :ct ],
+      :de => [ :pa, :md, :nj ],
+      :md => [ :pa, :wv, :va, :de, :wdc ],
+      :wdc => [ :md, :va ]
+    }
+  end
+
+  def eastern_half do
+    [ :mn, :ia, :mo, :ar, :la, :wi, :il, :tn, :ms, :mi, :in, :ky, :al, :ga, :oh, :wv, :ny, :nj, :pa, :va,
+      :nc, :sc, :fl, :me, :nh, :vt, :ma, :ct, :ri, :de, :md, :wdc ]
+  end
+
+  def run do
+    Hamiltonian.reduce_graph(Hamiltonian.usa, Hamiltonian.eastern_half) |> Hamiltonian.find_hamiltonian(:wdc)
+  end
+end

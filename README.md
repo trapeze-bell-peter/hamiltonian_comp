@@ -77,3 +77,48 @@ Unfortunately, under the wraps execution is still single threaded.
 
 Because it is a recent language, there is less support.  In particular, there
 is currently no debugger available.
+## Elixir
+[Elixir](https://elixir-lang.org/) is a functional programming language based
+on Erlang.  Its syntax is rubyesque.  Key features of functional programming
+languages are:
+
+* everything is immutable; once a value has been assigned to a variable it
+  cannot change
+* instead of methods, we have functions; these take a set of inputs and return
+  an output  
+* instead of if-then-else statements, functional languages rely on pattern
+  matching
+* instead of loops, functional languages rely on recursion to achieve the same
+
+People are excited about functional languages for two reasons: firstly,
+it is easier to reason about whether a program is correct (at least according
+to the functional programming disciples), and secondly, because of their structure
+it is easier to produce concurrent programs.  This should be a significant advantage
+in today's multi-core environment.
+
+While I get all these advantages, as an OO programmer, I find the mental jump
+to writing functional programs a big step.  It does not come naturally for me.
+
+The following shows how to pre-compile and then run the code.  
+```console
+# elixirc hamiltonian.exc
+
+# time elixir -e Hamiltonian.run
+Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+
+real	0m0.485s
+user	0m0.491s
+sys	0m0.051s
+```
+
+It's faster than Ruby although not as much faster as I expected.  If Ruby would
+support a pre-compile stage, I suspect the speed advantage would be even less.
+
+Strengths or Elixir:
+- Elixir/Erlang has a strong runtime environment making deploying large multi-core
+  applications easy; this is why the Whatsapp backend is written in Erlang
+- Very robust
+
+Weaknesses:
+- Functional programming takes getting used to
+- Not as fast as compiled OO languages
