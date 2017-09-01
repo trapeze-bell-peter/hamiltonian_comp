@@ -1,3 +1,5 @@
 java/.idea/
 java/java.iml
 java/target/
+crystal/hamiltonian
+elixir/*.beam
