@@ -20,6 +20,13 @@ This is not the most scientific language comparison, but nonetheless is interest
 Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
 
+> Neil has just added Java to it.  Neil did the sensible thing of integrating
+> timings into the actual code, and running the code multiple times.  There
+> are two advantages to this approach: we take out the file reading aspect
+> which is of less importance to us, we remove initial system startup time,
+> and using multiple iterations ensures the measurement is more significant.
+> I will refactor my examples to do the same.
+
 ## Ruby - the original implementation
 Ruby is my personal goto language when I want to explore a concept and implement
 something quickly.  It combines a well thought through (although admittedly
@@ -148,3 +155,68 @@ Strengths or Elixir:
 Weaknesses:
 - Functional programming takes getting used to
 - Not as fast as compiled OO languages
+
+## Java
+Thanks to Neil for implementing this.
+
+Java is one of the two most popular languages around today (the other being C#).
+As such it felt important to include it in our evaluation since it is a very
+useful reference point.
+
+Compared to Ruby, Java's syntax is not as expressive leading to more lines of
+code - although my Java friends tell me that will all change with Java 9.  While
+it is fairly OO it does also have primitive types which does sometimes lead to
+more complex code.  That said, it is blazingly fast, you will always be able to find
+an answer to your questions on Stackoverflow, and there are lots of libraries for
+it.
+
+```console
+# mvn clean package
+
+... lots of output from the build processes
+
+# cd target
+# java -jar hamiltonian-path-1.0.0-SNAPSHOT.jar
+Java Hamiltonian Path
+Found Path
+[wdc, md, wv, ky, tn, va, nc, sc, ga, fl, al, ms, la, ar, mo, ia, mn, wi, il, in, mi, oh, pa, de, nj, ny, ct, ri, ma, vt, nh, me]
+Run 1 : Duration: 177ms
+Found Path
+[wdc, md, wv, ky, tn, va, nc, sc, ga, fl, al, ms, la, ar, mo, ia, mn, wi, il, in, mi, oh, pa, de, nj, ny, ct, ri, ma, vt, nh, me]
+Run 2 : Duration: 135ms
+Found Path
+[wdc, md, wv, ky, tn, va, nc, sc, ga, fl, al, ms, la, ar, mo, ia, mn, wi, il, in, mi, oh, pa, de, nj, ny, ct, ri, ma, vt, nh, me]
+Run 3 : Duration: 138ms
+Found Path
+[wdc, md, wv, ky, tn, va, nc, sc, ga, fl, al, ms, la, ar, mo, ia, mn, wi, il, in, mi, oh, pa, de, nj, ny, ct, ri, ma, vt, nh, me]
+Run 4 : Duration: 133ms
+Found Path
+[wdc, md, wv, ky, tn, va, nc, sc, ga, fl, al, ms, la, ar, mo, ia, mn, wi, il, in, mi, oh, pa, de, nj, ny, ct, ri, ma, vt, nh, me]
+Run 5 : Duration: 138ms
+
+```
+
+One interesting observation is that because of the way the JIT compiler works
+the code gets faster as we repeat it.  Here is the output if I time the execution
+using the UNIX time command:
+
+```console
+real	0m0.845s
+user	0m0.985s
+sys	0m0.027s
+```
+
+Allowing for the fact that we do the search 5 times, this puts the execution speed
+at around 200ms per iteration, slightly ahead of Crystal.
+
+Pros:
+- maturity
+- speed
+- availability of 3rd party libraries
+- great tool libraries including debuggers
+- good concurrency support
+
+Negatives:
+- C++-derived syntax can be a bit cumbersome
+- not pure OO
+- quite restrictive static typing scheme
