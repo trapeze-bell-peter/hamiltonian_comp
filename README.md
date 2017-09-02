@@ -20,12 +20,9 @@ This is not the most scientific language comparison, but nonetheless is interest
 Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
 
-> Neil has just added Java to it.  Neil did the sensible thing of integrating
-> timings into the actual code, and running the code multiple times.  There
-> are two advantages to this approach: we take out the file reading aspect
-> which is of less importance to us, we remove initial system startup time,
-> and using multiple iterations ensures the measurement is more significant.
-> I will refactor my examples to do the same.
+I have tried to structure the different implementions in roughly the same way.
+The actual algorithm is in its own file.  This should allow us to compare both
+LOCs and execution time in a relatively comparable way.
 
 ## Ruby - the original implementation
 Ruby is my personal goto language when I want to explore a concept and implement
@@ -36,7 +33,8 @@ probably be many lines of code.
 
 Ruby is interpreted.  Part of Ruby's power comes from the fact that it is a
 strongly typed, but dynamically type checked language.  The downside to this
-approach is that the language is quite slow.  Also, to make the language
+approach is that the language is slow.  In this benchmark its four times slower
+than Crystal and Elixir, and five times slower than Java.  Also, to make the language
 thread-safe, the Ruby standard interpreter has the global interpreter lock
 which ensures only one thread executes at a time, even when running on a
 multi-core machine.
@@ -50,12 +48,17 @@ hash maps and lists.
 
 ```console
 $ time ruby hamiltonian.rb
-[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-
-real	0m0.878s
-user	0m0.867s
-sys	0m0.009s
-$
+user     system      total        real
+find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+0.820000   0.000000   0.820000 (  0.819739)
+find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+0.810000   0.000000   0.810000 (  0.814943)
+find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+0.820000   0.000000   0.820000 (  0.817086)
+find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+0.810000   0.000000   0.810000 (  0.815549)
+find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+0.820000   0.000000   0.820000 (  0.817271)
 ```
 
 Strengths or Ruby:
@@ -108,14 +111,12 @@ the releae flag, the compiler dumps out with an LLVM assertion error.
 Strengths or Crystal:
 - Expressive language
 - Pure OO - everything is an object
-- Very fast
+- Fast
 
 Weaknesses:
 - Small community so less support
 - Tool chain still in development
 - For now, true multi-threaded behaviour is experimental
-
-
 
 ## Elixir
 [Elixir](https://elixir-lang.org/) is a functional programming language based
