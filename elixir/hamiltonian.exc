@@ -109,6 +109,9 @@ defmodule Hamiltonian do
   end
 
   def run do
-    Hamiltonian.reduce_graph(Hamiltonian.usa, Hamiltonian.eastern_half) |> Hamiltonian.find_hamiltonian(:wdc)
+    reduced_graph = Hamiltonian.reduce_graph(Hamiltonian.usa, Hamiltonian.eastern_half)
+    for _ <- 1..5 do
+      IO.inspect :timer.tc(fn -> Hamiltonian.find_hamiltonian(reduced_graph, :wdc) end)
+    end
   end
 end

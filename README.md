@@ -143,16 +143,22 @@ The following shows how to pre-compile and then run the code.
 ```console
 # elixirc hamiltonian.exc
 
-# time elixir -e Hamiltonian.run
+# elixir -e Hamiltonian.run
 Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-
-real	0m0.485s
-user	0m0.491s
-sys	0m0.051s
+{263852, true}
+Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+{268543, true}
+Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+{262652, true}
+Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+{264271, true}
+Solution: [:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
+{263152, true}
 ```
 
-It's faster than Ruby although not as much faster as I expected.  If Ruby would
-support a pre-compile stage, I suspect the speed advantage would be even less.
+The number is time for the Hamiltonian search in microseconds.  Now that I have
+switched to just measuring the actual Hamiltonian search its much faster than I
+expected, and not that far off Crystal.
 
 Strengths or Elixir:
 - Elixir/Erlang has a strong runtime environment making deploying large multi-core
@@ -161,7 +167,6 @@ Strengths or Elixir:
 
 Weaknesses:
 - Functional programming takes getting used to
-- Not as fast as compiled OO languages
 
 ## Java
 Thanks to Neil for implementing this.
