@@ -88,15 +88,22 @@ Because it is a recent language, there is less tool support.  In particular, the
 is currently limited debugging available.
 
 ```console
-# crystal build hamiltonian.cr
-# time ./hamiltonian
-complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
-
-real	0m0.239s
-user	0m0.231s
-sys	0m0.004s
+# crystal run hamiltonian.cr
+Warning: benchmarking without the `--release` flag won't yield useful results
+find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+  0.220000   0.000000   0.220000 (  0.226732)
+find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+  0.230000   0.000000   0.230000 (  0.224444)
+find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+  0.220000   0.000000   0.220000 (  0.224310)
+find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+  0.230000   0.000000   0.230000 (  0.225288)
+find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> sc -> ga -> fl -> al -> ms -> la -> ar -> mo -> ia -> mn -> wi -> il -> in -> mi -> oh -> pa -> de -> nj -> ny -> ct -> ri -> ma -> vt -> nh -> me
+  0.220000   0.000000   0.220000 (  0.224679)
 ```
-This shows the language is pretty fast.
+This shows the language is pretty fast, but on this problem not as fast as Java.
+Note the warning about not using the release flag.  However, when I compile with
+the releae flag, the compiler dumps out with an LLVM assertion error.
 
 Strengths or Crystal:
 - Expressive language
@@ -197,17 +204,7 @@ Run 5 : Duration: 138ms
 ```
 
 One interesting observation is that because of the way the JIT compiler works
-the code gets faster as we repeat it.  Here is the output if I time the execution
-using the UNIX time command:
-
-```console
-real	0m0.845s
-user	0m0.985s
-sys	0m0.027s
-```
-
-Allowing for the fact that we do the search 5 times, this puts the execution speed
-at around 200ms per iteration, slightly ahead of Crystal.
+the code gets faster as we repeat it.
 
 Pros:
 - maturity
