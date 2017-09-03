@@ -15,7 +15,7 @@ before.
 More recently, we have started looking at implementing more modern versions of
 our key algorithms.  Before embarking on this, I wanted to explore the suitability
 of some of the more modern languages.  This repository captures our investigation.
-This is not the most scientific language comparison, but nonetheless is interesting.
+This is not the most scientific language comparison, but nonetheless it is interesting.
 
 Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
@@ -106,9 +106,9 @@ find hamiltonian complete journey = wdc -> md -> wv -> ky -> tn -> va -> nc -> s
 ```
 This shows the language is pretty fast, but on this problem not as fast as Java.
 Note the warning about not using the release flag.  However, when I compile with
-the releae flag, the compiler dumps out with an LLVM assertion error.
+the release flag, the compiler dumps out with an LLVM assertion error.
 
-Strengths or Crystal:
+Strengths of Crystal:
 - Expressive language
 - Pure OO - everything is an object
 - Fast
@@ -223,3 +223,97 @@ Negatives:
 - C++-derived syntax can be a bit cumbersome
 - not pure OO
 - quite restrictive static typing scheme
+
+##Go
+
+If I am honest, I don't know what to think about Go.  Go is really C with some
+useful extra language elements added: ranges (a form of dynamic arrays), maps
+(same as hashes in Ruby), and direct support for concurrency through
+Communicating Sequential Processes.  That is all good.
+
+Bad, IMHO, is that unlike most other modern languages that have replaced pointer
+manipulation with references to objects, Go still has the pointer arithmetic as
+we know and hated in C.  Go is also not OO, although I see this as less of a
+drawback. Go's inbuilt types are not as powerful as the inbuilt types in Elixir
+or Ruby.  As a programmer you have to do much more of the lifting yourself.
+This almost certainly leads to more efficient programs (in terms of execution speed), but it also leads to
+more code.  Here are a few examples:
+
+```ruby
+  # Ruby code to print Hello World five times
+  5.times { puts 'Hello World' }
+```
+
+Here is the equivalent Go version:
+
+```go
+for i := 0;  i<5; i++ {
+  ftm.println("Hello World")
+}
+```
+
+Another example.  In my Hamiltonian problem I want to remove all neighbours
+not in the eastern half of the USA.  Here is my Ruby to achieve this:
+
+```ruby
+  neighbours.delete_if { |neighbour| !states.include?(neighbour) }
+````
+
+Here is the equivalent Go:
+
+```go
+func removeUnwantedNeighbours(neighbours []string) []string {
+	var new_neighbours []string
+
+	for _, neighbour := range neighbours {
+		if isWantedState(neighbour) {
+			new_neighbours = append(new_neighbours, neighbour)
+		}
+	}
+
+	return new_neighbours
+}
+```  
+
+Having moaned about Go, it is pretty fast.  Here is the command to build
+and run it:
+
+```console
+# go run hamiltonian.go
+[wdc md wv ky tn va nc sc ga fl al ms la ar mo ia mn wi il in mi oh pa de nj ny ct ri ma vt nh me]
+Time to search for hamiltonian 124.641366ms[wdc md wv ky tn va nc sc ga fl al ms la ar mo ia mn wi il in mi oh pa de nj ny ct ri ma vt nh me]
+Time to search for hamiltonian 139.597411ms[wdc md wv ky tn va nc sc ga fl al ms la ar mo ia mn wi il in mi oh pa de nj ny ct ri ma vt nh me]
+Time to search for hamiltonian 141.944611ms[wdc md wv ky tn va nc sc ga fl al ms la ar mo ia mn wi il in mi oh pa de nj ny ct ri ma vt nh me]
+Time to search for hamiltonian 129.796872ms[wdc md wv ky tn va nc sc ga fl al ms la ar mo ia mn wi il in mi oh pa de nj ny ct ri ma vt nh me]
+Time to search for hamiltonian 127.502759ms
+```
+
+So Go is similarly fast to Java but doesn't need the initial iteration to get
+itself optimised.
+
+Pros:
+- Backed by Google
+- Speed
+
+Negatives:
+- It's quite low level - means more code required to achieve an outcome
+- Pointers rather than object references :-(
+- not OO
+
+#Conclusions
+
+If you just want to test out a concept and execution time is not an issue,
+then I would stick with Ruby.  Its expressive power still makes it a really
+useful goto language.
+
+If speed is important, I would go with Java over Go.  It's more mature and for my
+problem it's about the same speed.
+
+Crystal and Elixir are somewhere in the middle: they are not that far behind
+Go and Java from an execution speed point-of-view but are much more expressive as
+languages compared to Java.  Crystal is not yet production ready, and Elixir
+requires a more fundamental shift in mental model for the programmer.
+
+#Final Comment
+There are quite a few other languages I would like to include: Python, Typescript,
+C# and Scala.  I will add them in, as an implementation becomes available.
