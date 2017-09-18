@@ -21,8 +21,26 @@ Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
 
 I have tried to structure the different implementions in roughly the same way.
-The actual algorithm is in its own file.  This should allow us to compare both
-LOCs and execution time in a relatively comparable way.
+That is the actual algorithm is in its own file.  This has not been universally
+applied.  For Go, C++ and Elixir all the code is in one file.
+
+I was particularly interested in comparing expressiveness of code against
+execution speed.  Lines of code is an indirect measure of that.
+The lines of code is measured by adding the SLoCs of all
+files required to build and execute the code.  SLoCs was measured by Github.
+Execution speed has been measured on Fedora Linux running on a fairly old i5.
+
+And here are the results:
+
+![Scatter Graph of language performance](./scatter_plot_comp.svg)
+
+What surprises me is that the difference in measured SLOCs is not more
+significant between Ruby, Crystal, Elixir and Go.  My guess is that the single
+line of code in Ruby is more expressive than Go, but ultimately, both need
+a single line of code to achieve the same result.  See below for more details.
+
+The other thing that surprised me is that Java and Go are not that much faster than
+Crystal and Elixir.
 
 ## Ruby - the original implementation
 Ruby is my personal goto language when I want to explore a concept and implement
@@ -224,7 +242,7 @@ Negatives:
 - not pure OO
 - quite restrictive static typing scheme
 
-##Go
+## Go
 
 If I am honest, I don't know what to think about Go.  Go is really C with some
 useful extra language elements added: ranges (a form of dynamic arrays), maps
@@ -300,7 +318,7 @@ Negatives:
 - Pointers rather than object references :-(
 - not OO
 
-##C++
+## C++
 
 C++ was the first language that tried to bridge the gap between the performance
 of C and the abstractions that OO languages like Smalltalk showed.  It's not a
@@ -329,13 +347,13 @@ To compile on linux:
 And running it:
 
 ```console
-[peter.bell@acerlinux c++]$ ./Hamiltonian
+# ./Hamiltonian
 Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(10ms)
 Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
 Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
 Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
 Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
-[peter.bell@acerlinux c++]$
+#
 ```
 
 So, around 2 orders of magnitude faster than Java, and close to 3 for Ruby.
@@ -366,6 +384,9 @@ Go and Java from an execution speed point-of-view but are much more expressive a
 languages compared to Java.  Crystal is not yet production ready, and Elixir
 requires a more fundamental shift in mental model for the programmer.
 
-#Final Comment
-There are quite a few other languages I would like to include: Python, Typescript,
+# Final Comment
+Any benchmark is inherently flawed.  They provide indications rather than
+definite answers.  I still think this is a useful comparison.
+
+There are quite a few other languages I would like to include: C#, Python, Typescript,
 and Scala.  I will add them in, as an implementation becomes available.
