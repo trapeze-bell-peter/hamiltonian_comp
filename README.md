@@ -179,9 +179,9 @@ useful reference point.
 Compared to Ruby, Java's syntax is not as expressive leading to more lines of
 code - although my Java friends tell me that will all change with Java 9.  While
 it is fairly OO it does also have primitive types which does sometimes lead to
-more complex code.  That said, it is blazingly fast, you will always be able to find
-an answer to your questions on Stackoverflow, and there are lots of libraries for
-it.
+more complex code.  That said, it is very fast (although it doesn't touch C++),
+you will always be able to find an answer to your questions on Stackoverflow,
+and there are lots of libraries for it.
 
 ```console
 # mvn clean package
@@ -236,8 +236,8 @@ manipulation with references to objects, Go still has the pointer arithmetic as
 we know and hated in C.  Go is also not OO, although I see this as less of a
 drawback. Go's inbuilt types are not as powerful as the inbuilt types in Elixir
 or Ruby.  As a programmer you have to do much more of the lifting yourself.
-This almost certainly leads to more efficient programs (in terms of execution speed), but it also leads to
-more code.  Here are a few examples:
+This almost certainly leads to more efficient programs (in terms of execution
+speed), but it also leads to more code.  Here are a few examples:
 
 ```ruby
   # Ruby code to print Hello World five times
@@ -300,13 +300,65 @@ Negatives:
 - Pointers rather than object references :-(
 - not OO
 
+##C++
+
+C++ was the first language that tried to bridge the gap between the performance
+of C and the abstractions that OO languages like Smalltalk showed.  It's not a
+very expressive language.  Most things the developer will need to do by hand
+(particularly garbage collection), but object libraries such as MFC have removed
+some of the hardwork.  My personal view is that C++ is also very complicated
+and its easy to create a mess.  Concepts such as operator overloading and multiple
+inheritance look great on paper but cause many issues in reality.  
+
+This solution beats all the other solutions handsdown.  However, it's not an
+entirely fair comparison:
+
+- The C++ implementation relies on the size of the problem being well defined.
+  Therefore, there are no dynamic heap allocations.  Instead, everything is
+  done using fixed arrays.
+- It makes heavy use of a couple of global variables to keep track of things.
+  Again, most OO programmers would frown upon this, but it does get the job
+  done very efficiently.
+
+To compile on linux:
+
+```console
+# g++ -o Hamiltonian Hamiltonian.cpp
+```
+
+And running it:
+
+```console
+[peter.bell@acerlinux c++]$ ./Hamiltonian
+Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(10ms)
+Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
+Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
+Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
+Found Path: wdc,md,wv,ky,tn,va,nc,sc,ga,fl,al,ms,la,ar,mo,ia,mn,wi,il,in,mi,oh,pa,de,nj,ny,ct,ri,ma,vt,nh,me,(5ms)
+[peter.bell@acerlinux c++]$
+```
+
+So, around 2 orders of magnitude faster than Java, and close to 3 for Ruby.
+However, as stated above, this is not an entirely fair comparison since the
+code has been written not to use heap objects.
+
+Pros:
+- Fast
+- Well used.  Therefore lots of libraries.
+
+Contas:
+- Syntax is not as expressive as modern languages
+- Overly complex concepts such as multiple inheritance and operator overloading
+- User needs to do more of the heap management themselves using destructors
+
 #Conclusions
 
 If you just want to test out a concept and execution time is not an issue,
 then I would stick with Ruby.  Its expressive power still makes it a really
 useful goto language.
 
-If speed is important, I would go with Java over Go.  It's more mature and for my
+If speed is essential, I would go with C++.  If speed is not essential but
+important I would choose Java over Go.  It's more mature and for my
 problem it's about the same speed.
 
 Crystal and Elixir are somewhere in the middle: they are not that far behind
@@ -316,4 +368,4 @@ requires a more fundamental shift in mental model for the programmer.
 
 #Final Comment
 There are quite a few other languages I would like to include: Python, Typescript,
-C# and Scala.  I will add them in, as an implementation becomes available.
+and Scala.  I will add them in, as an implementation becomes available.
