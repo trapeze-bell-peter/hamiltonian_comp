@@ -418,17 +418,14 @@ Contas:
 - Setting up the environment feels painful
 - Syntax is slightly less expressive than Ruby, altough on a par with most of the other languages
 
-#Conclusions
+# Conclusions
 
 If you just want to test out a concept and execution time is not an issue,
 then I would use Ruby or Typescript.  Which you use is probably more a question
 of familiarity.
 
 If speed is essential, I would go with C++.  If speed is not essential but
-important I would choose Java over Go.  It's more mature and for my
-problem it's about the same speed.
-
-If speed is reasonably important, then I would Typescript in preference to
+important I would choose Typescript over in preference to
 almost any other language in this comparison.  Crystal and Elixir are
 interesting: they are not that far behind Go and Java from an execution speed
 point-of-view but are much more expressive as languages compared to Java.
