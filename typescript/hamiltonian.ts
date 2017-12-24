@@ -8,10 +8,10 @@ class Hamiltonian {
     for(var state of Object.getOwnPropertyNames(graph_of_states)) {
       this.graph.set(state, graph_of_states[state]);
     }
-		
+
 		this.reduce_graph(states_to_visit);
 		this.check_graph();
-  }
+	}
 
   reduce_graph(states_to_visit: String[]): void {
     // remove unwanted states.
@@ -24,7 +24,7 @@ class Hamiltonian {
       }
     }
 	}
-	
+
 	// Little test method to ensure the graph is undirected: if 'a' is a neighbour of 'b', then
   // 'b' must be a neighbour of 'a'
 	check_graph(): void {
@@ -33,7 +33,7 @@ class Hamiltonian {
 				if (this.graph.get(neighbour) == null) {
 					console.log(`no graph entry for ${neighbour}`);
 				} else if (this.graph.get(neighbour).indexOf(state)<0) {
-					console.log(`${state} -> ${neighbour} exists, but not ${neighbour} -> ${state}`); 
+					console.log(`${state} -> ${neighbour} exists, but not ${neighbour} -> ${state}`);
 				}
 			}
 		}

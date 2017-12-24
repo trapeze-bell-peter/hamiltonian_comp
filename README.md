@@ -32,7 +32,7 @@ Execution speed has been measured on Fedora Linux running on a fairly old i5.
 
 And here are the results:
 
-![Scatter Graph of language performance](./scatter_plot_comp.svg)
+![Scatter Graph of language performance](./scatter_plot_comp.png)
 
 What surprises me is that the difference in measured SLOCs is not more
 significant between Ruby, Crystal, Elixir and Go.  My guess is that the single
@@ -407,7 +407,7 @@ wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia->
 hamiltonian: 101.341ms
 wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
 hamiltonian: 104.246ms
-# 
+#
 ```
 
 Pros:
@@ -436,5 +436,5 @@ shift in mental model for the programmer.
 Any benchmark is inherently flawed.  They provide indications rather than
 definite answers.  I still think this is a useful comparison.
 
-There are quite a few other languages I would like to include: C#, Python, 
+There are quite a few other languages I would like to include: C#, Python,
 and Scala.  I will add them in, as an implementation becomes available.
