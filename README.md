@@ -275,7 +275,7 @@ not in the eastern half of the USA.  Here is my Ruby to achieve this:
 
 ```ruby
   neighbours.delete_if { |neighbour| !states.include?(neighbour) }
-````
+```
 
 Here is the equivalent Go:
 
@@ -369,24 +369,75 @@ Contas:
 - Overly complex concepts such as multiple inheritance and operator overloading
 - User needs to do more of the heap management themselves using destructors
 
+## Typescript
+
+Given our use of Typescript in Corus, I thought it would be interesting to see
+how it did with the Hamiltonian problem running on Node.js.
+
+Getting the Typescript compiler and node.js working together has been painful -
+more so than any other language in this comparison.
+
+Typescript itself is fairly easy to work with.  It can be as strongly or weakly
+typed as you like.  The object library is now fairly comprehensive, although still
+not as rounded as Ruby.  I am surprised that Typescript does not have Map support
+backed into the syntax like most of the other languages.  Overall, its expressiveness is
+lower than Ruby but better than Go, Java or C++.
+
+The really big surprise, though, is the execution speed.  It is faster than Java,
+although not anywhere near C++.  My main conclusion is that the Map functionality
+has been implemented behind the scenes in very efficient C.
+
+To transpile to Javascript on Linux:
+
+```console
+# tsc --target es6 --sourceMap true hamiltonian.ts
+```
+
+And running it:
+
+```console
+# node hamiltonian.js
+wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
+hamiltonian: 104.798ms
+wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
+hamiltonian: 106.906ms
+wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
+hamiltonian: 101.813ms
+wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
+hamiltonian: 101.341ms
+wdc-> md-> wv-> ky-> tn-> va-> nc-> sc-> ga-> fl-> al-> ms-> la-> ar-> mo-> ia-> mn-> wi-> il-> in-> mi-> oh-> pa-> de-> nj-> ny-> ct-> ri-> ma-> vt-> nh-> me
+hamiltonian: 104.246ms
+# 
+```
+
+Pros:
+- Pretty fast
+- Overall, reasonable syntax with ability to be strict with types
+
+Contas:
+- Setting up the environment feels painful
+- Syntax is slightly less expressive than Ruby, altough on a par with most of the other languages
+
 #Conclusions
 
 If you just want to test out a concept and execution time is not an issue,
-then I would stick with Ruby.  Its expressive power still makes it a really
-useful goto language.
+then I would use Ruby or Typescript.  Which you use is probably more a question
+of familiarity.
 
 If speed is essential, I would go with C++.  If speed is not essential but
 important I would choose Java over Go.  It's more mature and for my
 problem it's about the same speed.
 
-Crystal and Elixir are somewhere in the middle: they are not that far behind
-Go and Java from an execution speed point-of-view but are much more expressive as
-languages compared to Java.  Crystal is not yet production ready, and Elixir
-requires a more fundamental shift in mental model for the programmer.
+If speed is reasonably important, then I would Typescript in preference to
+almost any other language in this comparison.  Crystal and Elixir are
+interesting: they are not that far behind Go and Java from an execution speed
+point-of-view but are much more expressive as languages compared to Java.
+Crystal is not yet production ready, and Elixir requires a more fundamental
+shift in mental model for the programmer.
 
 # Final Comment
 Any benchmark is inherently flawed.  They provide indications rather than
 definite answers.  I still think this is a useful comparison.
 
-There are quite a few other languages I would like to include: C#, Python, Typescript,
+There are quite a few other languages I would like to include: C#, Python, 
 and Scala.  I will add them in, as an implementation becomes available.

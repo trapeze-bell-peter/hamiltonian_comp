@@ -5,3 +5,5 @@ crystal/hamiltonian
 elixir/*.beam
 go/hamiltonian
 c++/Hamiltonian
+typescript/hamiltonian.js
+
