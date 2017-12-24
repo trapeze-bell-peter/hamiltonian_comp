@@ -22,7 +22,7 @@ language both in terms of expressive power, but also execution speed.
 
 I have tried to structure the different implementions in roughly the same way.
 That is the actual algorithm is in its own file.  This has not been universally
-applied.  For Go, C++ and Elixir all the code is in one file.
+applied.  For Typescript, Go, C++ and Elixir all the code is in one file.
 
 I was particularly interested in comparing expressiveness of code against
 execution speed.  Lines of code is an indirect measure of that.
@@ -35,12 +35,17 @@ And here are the results:
 ![Scatter Graph of language performance](./scatter_plot_comp.png)
 
 What surprises me is that the difference in measured SLOCs is not more
-significant between Ruby, Crystal, Elixir and Go.  My guess is that the single
-line of code in Ruby is more expressive than Go, but ultimately, both need
+significant between Typescript, Ruby, Crystal, Elixir and Go.  My guess is that
+the single line of code in Ruby is more expressive than Go, but ultimately, both need
 a single line of code to achieve the same result.  See below for more details.
 
-The other thing that surprised me is that Java and Go are not that much faster than
-Crystal and Elixir.
+The other thing that surprised me is that Typescript was only beaten by C++.
+Overall execution speed falls into four clusters:
+
+- C++ way out ahead
+- Typescript, Java and Go all quite close together
+- Crystal and Elixir a bit behind those
+- Ruby right at the back
 
 ## Ruby - the original implementation
 Ruby is my personal goto language when I want to explore a concept and implement
@@ -413,8 +418,9 @@ hamiltonian: 104.246ms
 Pros:
 - Pretty fast
 - Overall, reasonable syntax with ability to be strict with types
+- Good debugger, once you have managed to get it working :-)
 
-Contas:
+Contras:
 - Setting up the environment feels painful
 - Syntax is slightly less expressive than Ruby, altough on a par with most of the other languages
 
@@ -425,7 +431,7 @@ then I would use Ruby or Typescript.  Which you use is probably more a question
 of familiarity.
 
 If speed is essential, I would go with C++.  If speed is not essential but
-important I would choose Typescript over in preference to
+important I would choose Typescript in preference to
 almost any other language in this comparison.  Crystal and Elixir are
 interesting: they are not that far behind Go and Java from an execution speed
 point-of-view but are much more expressive as languages compared to Java.
