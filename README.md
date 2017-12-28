@@ -73,15 +73,15 @@ hash maps and lists.
 $ time ruby hamiltonian.rb
 user     system      total        real
 find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-0.820000   0.000000   0.820000 (  0.819739)
+0.463137   0.000018   0.463155 (  0.464664)
 find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-0.810000   0.000000   0.810000 (  0.814943)
+0.461216   0.000000   0.461216 (  0.462069)
 find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-0.820000   0.000000   0.820000 (  0.817086)
+0.463329   0.000001   0.463330 (  0.464143)
 find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-0.810000   0.000000   0.810000 (  0.815549)
+0.462139   0.000000   0.462139 (  0.462910)
 find hamiltonian[:wdc, :md, :wv, :ky, :tn, :va, :nc, :sc, :ga, :fl, :al, :ms, :la, :ar, :mo, :ia, :mn, :wi, :il, :in, :mi, :oh, :pa, :de, :nj, :ny, :ct, :ri, :ma, :vt, :nh, :me]
-0.820000   0.000000   0.820000 (  0.817271)
+0.461997   0.000001   0.461998 (  0.462801)
 ```
 
 Strengths or Ruby:
