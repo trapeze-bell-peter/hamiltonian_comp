@@ -202,9 +202,12 @@ useful reference point.
 Compared to Ruby, Java's syntax is not as expressive leading to more lines of
 code - although my Java friends tell me that will all change with Java 9.  While
 it is fairly OO it does also have primitive types which does sometimes lead to
-more complex code.  That said, it is very fast (although it doesn't touch C++),
-you will always be able to find an answer to your questions on Stackoverflow,
-and there are lots of libraries for it.
+more complex code.
+
+Originally, Neil implemented the version found in the Java directory.  This uses
+Spring for the implementation.  Compared to the other languages, the Spring version
+needed an awful lot of lines of code, and was slightly slower than Typescript and
+Go.  Here is the build and execution of the Spring version:
 
 ```console
 # mvn clean package
@@ -232,8 +235,31 @@ Run 5 : Duration: 138ms
 
 ```
 
-One interesting observation is that because of the way the JIT compiler works
-the code gets faster as we repeat it.
+When I told Neil that his Java version ran slower than Typescript, he was
+suitably shocked, and then went an implemented a version that is pure Java
+without the need for Spring.  Here is the sequence to compile and execute
+the pure Java version:
+
+```console
+# cd 'java(pure)'/src
+# javac Hamiltonian.java
+# java Hamiltonian
+wdc->md->wv->ky->tn->va->nc->sc->ga->fl->al->ms->la->ar->mo->ia->mn->wi->il->in->mi->oh->pa->de->nj->ny->ct->ri->ma->vt->nh->me->
+Duration: 134ms
+wdc->md->wv->ky->tn->va->nc->sc->ga->fl->al->ms->la->ar->mo->ia->mn->wi->il->in->mi->oh->pa->de->nj->ny->ct->ri->ma->vt->nh->me->
+Duration: 122ms
+wdc->md->wv->ky->tn->va->nc->sc->ga->fl->al->ms->la->ar->mo->ia->mn->wi->il->in->mi->oh->pa->de->nj->ny->ct->ri->ma->vt->nh->me->
+Duration: 85ms
+wdc->md->wv->ky->tn->va->nc->sc->ga->fl->al->ms->la->ar->mo->ia->mn->wi->il->in->mi->oh->pa->de->nj->ny->ct->ri->ma->vt->nh->me->
+Duration: 90ms
+wdc->md->wv->ky->tn->va->nc->sc->ga->fl->al->ms->la->ar->mo->ia->mn->wi->il->in->mi->oh->pa->de->nj->ny->ct->ri->ma->vt->nh->me->
+Duration: 85ms
+
+```
+
+Two interesting observations arise: firstly, while Spring obviously brings
+advantages, for this problem it just increases code size and slows down performance;
+secondly, because of the way the JIT compiler works the code gets faster as we repeat it.
 
 Pros:
 - maturity
@@ -388,8 +414,9 @@ not as rounded as Ruby.  I am surprised that Typescript does not have Map suppor
 backed into the syntax like most of the other languages.  Overall, its expressiveness is
 lower than Ruby but better than Go, Java or C++.
 
-The really big surprise, though, is the execution speed.  It is faster than Java,
-although not anywhere near C++.  My main conclusion is that the Map functionality
+The really big surprise, though, is the execution speed.  It is only very slightly
+slower than pure Java and faster than the Spring version in Java.  However, it is
+not anywhere near C++.  My main conclusion is that the Map functionality
 has been implemented behind the scenes in very efficient C.
 
 To transpile to Javascript on Linux:
@@ -432,11 +459,14 @@ of familiarity.
 
 If speed is essential, I would go with C++.  If speed is not essential but
 important I would choose Typescript in preference to
-almost any other language in this comparison.  Crystal and Elixir are
-interesting: they are not that far behind Go and Java from an execution speed
-point-of-view but are much more expressive as languages compared to Java.
-Crystal is not yet production ready, and Elixir requires a more fundamental
-shift in mental model for the programmer.
+almost any other language in this comparison.  Yes, pure Java is marginally
+faster, but Typescript is still more flexible and has a better type system.
+Personally, I cannot see much reason to use Go.
+
+Crystal and Elixir are interesting: they are not that far behind Typescript, Go
+and Java from an execution speed point-of-view but are much more expressive as
+languages compared to Java. Crystal is not yet production ready, and Elixir
+requires a more fundamental shift in mental model for the programmer.
 
 # Final Comment
 Any benchmark is inherently flawed.  They provide indications rather than
