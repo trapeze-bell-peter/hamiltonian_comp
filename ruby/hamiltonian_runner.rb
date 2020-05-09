@@ -57,7 +57,7 @@ eastern_half = [ :mn, :ia, :mo, :ar, :la, :wi, :il, :tn, :ms, :mi, :in, :ky, :al
                :nc, :sc, :fl, :me, :nh, :vt, :ma, :ct, :ri, :de, :md, :wdc ]
 
 Benchmark.bm do |bm|
-  5.times do
+  40.times do
     trip1 = Hamiltonian.new( usa, eastern_half )
     bm.report("find hamiltonian"){ trip1.find_hamiltonian( :wdc ) }
   end

@@ -104,7 +104,7 @@ public class Hamiltonian
             graph.reduceGraph(eastCoastJson);
             if (graph.checkGraph())
                 {
-                for(int runIndex = 0; runIndex < 5; ++runIndex)
+                for(int runIndex = 0; runIndex < 30; ++runIndex)
                     {
                     Hamiltonian hamiltonian = new Hamiltonian(graph);
                     Calendar startTime = Calendar.getInstance();

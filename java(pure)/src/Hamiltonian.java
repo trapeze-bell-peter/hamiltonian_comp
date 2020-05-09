@@ -10,7 +10,7 @@ public class Hamiltonian {
     private Map<String, List<String>> graph = new HashMap<>();
 
     public static void main(String[] args) {
-        for (int i=0; i<5; ++i) {
+        for (int i=0; i<30; ++i) {
             Hamiltonian h = new Hamiltonian();
             long start = Calendar.getInstance().getTimeInMillis();
             h.findHamiltonian("wdc");
