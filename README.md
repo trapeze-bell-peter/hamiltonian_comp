@@ -1,8 +1,10 @@
-# hamiltonian_comp
+# hamiltonian_comp: Performance versus Clarity
 
 ## Introduction
+
 Much of what Trapeze does is around solving various versions of the travelling
-salesman problem. Finding a [Hamiltonian path](https://en.wikipedia.org/wiki/Hamiltonian_path)
+salesman problem in the context of demand responsivenss publci transport.
+Finding a [Hamiltonian path](https://en.wikipedia.org/wiki/Hamiltonian_path)
 is a related but simpler problem.  The aim is to find a path in an undirected
 graph that visits all nodes exactly once.
 
@@ -21,18 +23,56 @@ Each implementation allowed us to explore the strengths and weaknesses of the
 language both in terms of expressive power, but also execution speed.
 
 I have tried to structure the different implementions in roughly the same way.
-That is the actual algorithm is in its own file.  This has not been universally
-applied.  For Typescript, Go, C++ and Elixir all the code is in one file.
+That is the actual algorithm is in its own file.
+
+## Clarity
 
 I was particularly interested in comparing expressiveness of code against
-execution speed.  Lines of code is an indirect measure of that.
-The lines of code is measured by adding the SLoCs of all
-files required to build and execute the code.  SLoCs was measured by Github.
-Execution speed has been measured on Fedora Linux running on a fairly old i5.
+execution speed.  Measuring expressivenss is really difficult as it includes
+personal preferences.  I therefore chose Statement Lines of Code. 
+This is an indirect and not great measure of that. 
+The lines of code is measured by adding the SLoCs of all files required to
+build and execute the code.  SLoCs was measured by Github.
+
+## Execution
+
+Execution speed has been measured on Ubuntu 20.04 Linux running on a fairly
+two year old Dell XPS-13 running an 8th generation i7 with 16 GB of memory.
+When running the code, only a shell and VS Code was running.  I have used
+the most recent stable language pack available in May 2020.  There are a
+couple of exceptions: for Ruby I have tried a number of different versions.
+For C# I used .Net Core v5.0BETA as this supports Linux better than older
+versions.
+
+For most languages the code was executed 5 times.  However, for languages
+that use a Just-In-Time compiler (Java and Truffle Ruby)  I did the tests
+30 times.
+
+## The Results
 
 And here are the results:
 
 ![Scatter Graph of language performance](./scatter_plot_comp.png)
+
+Here is the same data represented as two tables:
+
+| Language      | Speed (ms) |
+|---------------|------------|
+| C++	        |          3 |
+| Crystal       |         48 |
+| Go            |       64.4 |
+| Typescript    |       67.8 |
+| Jave (pure)	|       82.4 |
+| Elixir	|        103 |
+| Java (Spring)	|        120 |
+| C#            |        115 |
+| Truffle Ruby	|        134 |
+| Ruby 2.6.1	|      256.8 |
+| Python 3.8	|      267.2 |
+| Ruby 2.7.0    |      284.4 |
+
+
+
 
 What surprises me is that the difference in measured SLOCs is not more
 significant between Typescript, Ruby, Crystal, Elixir and Go.  My guess is that
@@ -46,6 +86,11 @@ Overall execution speed falls into four clusters:
 - Typescript, Java and Go all quite close together
 - Crystal and Elixir a bit behind those
 - Ruby right at the back
+
+## The Algorithm
+
+There is nothing sophisticated about the algorithm: it is a recursive descent exhaustive search algorithm.
+No parallel processing.
 
 ## Ruby - the original implementation
 Ruby is my personal goto language when I want to explore a concept and implement
