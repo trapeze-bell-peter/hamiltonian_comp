@@ -17,3 +17,9 @@ java/.settings/org.eclipse.m2e.core.prefs
 typescript/hamiltonian.js.map
 typescript/package-lock.json
 typescript/node_modules
+
+c#/hamiltonian/obj/Debug/net5.0/
+
+c#/hamiltonian/bin/
+
+c#/hamiltonian/obj/
