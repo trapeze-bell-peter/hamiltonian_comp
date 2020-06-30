@@ -15,7 +15,7 @@ func main() {
 		}
 
 		start := time.Now()
-		find_hamiltonian_recursively("wdc", make([]string, 0), unvisited)
+		find_hamiltonian_recursively("ri", make([]string, 0), unvisited)
 		fmt.Printf("Time to search for hamiltonian %s", time.Since(start))
   }
 }
@@ -83,11 +83,6 @@ func find_hamiltonian_recursively(current string, journey []string, unvisited ma
 }
 
 
-func printGraph() {
-	for state, neighbours := range USA {
-		fmt.Println("Key:", state, "Value:", neighbours)
-	}
-}
 // USA graph showing for each state what its immediate neighbours are.
 var USA = map[string][]string{
 	"wa":  {"or", "id"},
@@ -114,11 +109,11 @@ var USA = map[string][]string{
 	"la":  {"ar", "tx", "ms"},
 	"wi":  {"mn", "ia", "il"},
 	"il":  {"wi", "ia", "mo", "ky", "in"},
-	"tn":  {"ky", "mo", "ar", "ms", "al", "ga", "nc", "va", "ky"},
-	"ms":  {"tn", "ar", "la", "al", "tn"},
+	"tn":  {"ky", "mo", "ar", "ms", "al", "ga", "nc", "va"},
+	"ms":  {"tn", "ar", "la", "al"},
 	"mi":  {"in", "oh"},
 	"in":  {"mi", "il", "ky", "oh"},
-	"ky":  {"oh", "in", "il", "mo", "tn", "va", "wv", "oh"},
+	"ky":  {"oh", "in", "il", "mo", "tn", "va", "wv"},
 	"al":  {"tn", "ms", "fl", "ga"},
 	"ga":  {"nc", "tn", "al", "fl", "sc"},
 	"oh":  {"mi", "in", "ky", "wv", "pa"},

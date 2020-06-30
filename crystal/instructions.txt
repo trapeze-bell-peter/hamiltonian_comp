@@ -1,0 +1,2 @@
+- install crystal using snap --classic
+- build with crystal build hamiltonian.cr --release

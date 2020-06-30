@@ -1,35 +1,22 @@
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class Hamiltonian {
+public class HamiltonianCount {
 
     private Map<String, List<String>> usa;
     private List<String> easternStates;
 
     private List<String> journey = new ArrayList<>();
     private Map<String, List<String>> graph = new HashMap<>();
+    long nodeCount;
 
     public static void main(String[] args) {
-        for (int i = 0; i < 30; ++i) {
-            Hamiltonian h = new Hamiltonian();
-            h.findHamiltonian("wdc");
-            System.out.println();
-        }
-        long sum = 0;
-        int count = 10;
-        String st = args.length == 0 ? "wdc" : args[0];
-        for (int i = 0; i < count; ++i) {
-            Hamiltonian h = new Hamiltonian();
-            long start = System.nanoTime();
-            h.findHamiltonian(st);
-            System.out.println();
-            sum += System.nanoTime() - start;
-        }
-        System.out.println("average: " + TimeUnit.NANOSECONDS.toMillis(sum / count) + "ms");
+        HamiltonianCount h = new HamiltonianCount();
+        h.findHamiltonian("ri");
+        h.findHamiltonian("wdc");
     }
 
-    public Hamiltonian() {
+    public HamiltonianCount() {
         initialiseStates();
         this.graph.putAll(usa);
         this.reduceGraph(easternStates);
@@ -61,6 +48,10 @@ public class Hamiltonian {
 //    }
 
     private void findHamiltonian(String start) {
+        if (nodeCount > 0) {
+            System.out.println("node count: " + nodeCount);
+        }
+        nodeCount = 0;
         if (!this.findHamiltoniamRecursively(start)) {
             System.out.println("No hamiltonian path found.");
         }
@@ -68,7 +59,7 @@ public class Hamiltonian {
 
     private boolean findHamiltoniamRecursively(String current) {
         journey.add(current);
-
+        nodeCount++;
         if (journey.size() == graph.size()) {
             for (String state : journey) {
                 System.out.print(state + "->");

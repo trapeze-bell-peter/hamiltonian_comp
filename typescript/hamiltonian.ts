@@ -96,11 +96,11 @@ let usa = {
 	"la": ["ar", "tx", "ms"],
 	"wi": ["mn", "ia", "il"],
 	"il": ["wi", "ia", "mo", "ky", "in"],
-	"tn": ["ky", "mo", "ar", "ms", "al", "ga", "nc", "va", "ky"],
-	"ms": ["tn", "ar", "la", "al", "tn"],
+	"tn": ["ky", "mo", "ar", "ms", "al", "ga", "nc", "va"],
+	"ms": ["tn", "ar", "la", "al"],
 	"mi": ["in", "oh"],
 	"in": ["mi", "il", "ky", "oh"],
-	"ky": ["oh", "in", "il", "mo", "tn", "va", "wv", "oh"],
+	"ky": ["oh", "in", "il", "mo", "tn", "va", "wv"],
 	"al": ["tn", "ms", "fl", "ga"],
 	"ga": ["nc", "tn", "al", "fl", "sc"],
 	"oh": ["mi", "in", "ky", "wv", "pa"],
@@ -130,6 +130,6 @@ let eastern_states = [ "mn", "ia", "mo", "ar", "la", "wi", "il", "tn", "ms", "mi
 for(var i=0; i<5; i++){
 	var h = new Hamiltonian(usa, eastern_states);
 	console.time('hamiltonian');
-	h.find_hamiltonian('wdc');
+	h.find_hamiltonian('ri');
 	console.timeEnd('hamiltonian');
 }

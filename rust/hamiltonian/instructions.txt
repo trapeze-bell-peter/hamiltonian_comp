@@ -1,0 +1,7 @@
+use cargo to build
+% cargo build --release
+
+or
+
+use cargo to run the release version
+% cargo run --release
