@@ -25,7 +25,7 @@ public class HamiltonianGraph {
     private static class SimpleLinkedList<T> {
         final int size;
         final T value;
-        final SimpleLinkedList next;
+        final SimpleLinkedList<T> next;
 
         public SimpleLinkedList(T value, SimpleLinkedList next) {
             this.value = value;
