@@ -125,11 +125,11 @@ void Load_US_States()
 	AddNode("la", 3, "ar", "tx", "ms");
 	AddNode("wi", 3, "mn", "ia", "il");
 	AddNode("il", 5, "wi", "ia", "mo", "ky", "in");
-	AddNode("tn", 9, "ky", "mo", "ar", "ms", "al", "ga", "nc", "va", "ky");
-	AddNode("ms", 5, "tn", "ar", "la", "al", "tn");
+	AddNode("tn", 8, "ky", "mo", "ar", "ms", "al", "ga", "nc", "va");
+	AddNode("ms", 4, "tn", "ar", "la", "al");
 	AddNode("mi", 2, "in", "oh");
 	AddNode("in", 4, "mi", "il", "ky", "oh");
-	AddNode("ky", 8, "oh", "in", "il", "mo", "tn", "va", "wv", "oh");
+	AddNode("ky", 7, "oh", "in", "il", "mo", "tn", "va", "wv");
 	AddNode("al", 4, "tn", "ms", "fl", "ga");
 	AddNode("ga", 5, "nc", "tn", "al", "fl", "sc");
 	AddNode("oh", 5, "mi", "in", "ky", "wv", "pa");

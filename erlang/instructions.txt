@@ -1,0 +1,28 @@
+erl to enter the erlang shell, and enter (notice the . at the end of the line) :
+
+
+1> c('hamiltonian') .
+{ok,hamiltonian}
+
+% the next line create the graph for the US states and binds it to the USA variable. Oregon had its name changed from 'or' to 'ore' in order to avoid conflict with the 'or' operator in erlang
+2> USA = hamiltonian:usa().
+[{wa,[ore,id]},
+ {ore,[wa,id,nv,ca]}, ....
+
+% the next line reduces the graph to the eastern states
+3> GRAPH = hamiltonian:reduceGraph(USA, hamiltonian:easternStates()) .
+[{mn,[ia,wi]},
+ {ia,[mn,mo,il,wi]} .....
+
+% the next line executes the hamiltonian search in the GRAPH, starting from wdc
+4> hamiltonian:findHamiltonian(GRAPH, 'wdc') .
+[nh,me,nh,vt,ma,ri,ct,ny,nj,de,pa,oh,mi,in,il,wi,mn,ia,mo,
+ ar,la,ms,al,fl,ga,sc,nc,va,tn|...]
+
+% to measure execution time, use the timer:tc function:
+5> timer:tc(hamiltonian, findHamiltonian, [GRAPH, 'wdc']) .
+{330131,
+ [nh,me,nh,vt,ma,ri,ct,ny,nj,de,pa,oh,mi,in,il,wi,mn,ia,mo,
+  ar,la,ms,al,fl,ga,sc,nc|...]}
+
+% 330131 was the execution time in micros

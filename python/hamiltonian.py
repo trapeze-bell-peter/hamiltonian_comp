@@ -29,11 +29,11 @@ usa = {
     "la": ["ar", "tx", "ms"],
     "wi": ["mn", "ia", "il"],
     "il": ["wi", "ia", "mo", "ky", "in"],
-    "tn": ["ky", "mo", "ar", "ms", "al", "ga", "nc", "va", "ky"],
-    "ms": ["tn", "ar", "la", "al", "tn"],
+    "tn": ["ky", "mo", "ar", "ms", "al", "ga", "nc", "va"],
+    "ms": ["tn", "ar", "la", "al"],
     "mi": ["in", "oh"],
     "in": ["mi", "il", "ky", "oh"],
-    "ky": ["oh", "in", "il", "mo", "tn", "va", "wv", "oh"],
+    "ky": ["oh", "in", "il", "mo", "tn", "va", "wv"],
     "al": ["tn", "ms", "fl", "ga"],
     "ga": ["nc", "tn", "al", "fl", "sc"],
     "oh": ["mi", "in", "ky", "wv", "pa"],
@@ -68,7 +68,7 @@ def clean_usa():
 
 
 def find_hamiltonian():
-    if not hamiltonian_recursively('wdc'):
+    if not hamiltonian_recursively('ri'):
         print('Could not find hamiltonian path.')
 
 

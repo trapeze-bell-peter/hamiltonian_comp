@@ -2,17 +2,17 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class Hamiltonian {
+public class HamiltonianSet {
 
     private Map<String, List<String>> usa;
     private List<String> easternStates;
 
-    private List<String> journey = new ArrayList<>();
+    private Collection<String> journey = new LinkedHashSet<>();
     private Map<String, List<String>> graph = new HashMap<>();
 
     public static void main(String[] args) {
+        HamiltonianSet h = new HamiltonianSet();
         for (int i = 0; i < 30; ++i) {
-            Hamiltonian h = new Hamiltonian();
             h.findHamiltonian("wdc");
             System.out.println();
         }
@@ -20,16 +20,16 @@ public class Hamiltonian {
         int count = 10;
         String st = args.length == 0 ? "wdc" : args[0];
         for (int i = 0; i < count; ++i) {
-            Hamiltonian h = new Hamiltonian();
             long start = System.nanoTime();
             h.findHamiltonian(st);
             System.out.println();
             sum += System.nanoTime() - start;
         }
         System.out.println("average: " + TimeUnit.NANOSECONDS.toMillis(sum / count) + "ms");
+
     }
 
-    public Hamiltonian() {
+    public HamiltonianSet() {
         initialiseStates();
         this.graph.putAll(usa);
         this.reduceGraph(easternStates);
@@ -47,7 +47,7 @@ public class Hamiltonian {
         }
         this.graph = reducedGraph;
     }
-//
+
 //    private void checkGraph() {
 //        for (Map.Entry<String, List<String>> entry : this.graph.entrySet()) {
 //            for (String neighbour : entry.getValue()) {
@@ -61,6 +61,7 @@ public class Hamiltonian {
 //    }
 
     private void findHamiltonian(String start) {
+        journey.clear();
         if (!this.findHamiltoniamRecursively(start)) {
             System.out.println("No hamiltonian path found.");
         }
@@ -76,7 +77,7 @@ public class Hamiltonian {
             return true;
         } else {
             for (String neighbour : graph.get(current)) {
-                if (journey.indexOf(neighbour) < 0) {
+                if (!journey.contains(neighbour)) {
                     if (findHamiltoniamRecursively(neighbour)) {
                         return true;
                     }
@@ -84,7 +85,7 @@ public class Hamiltonian {
             }
         }
 
-        journey.remove(journey.size() - 1);
+        journey.remove(current);
         return false;
     }
 

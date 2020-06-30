@@ -1,0 +1,8 @@
+compile with elixirc hamiltonian.exc
+start the interactive command line
+
+% iex
+
+run with:
+
+iex(1)> Hamiltonian.run

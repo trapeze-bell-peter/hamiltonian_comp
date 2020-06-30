@@ -1,0 +1,8 @@
+Install haskell and haskell compiler (ghc)
+Use cabal to install timeit
+- cabal update && cabal install timeit
+
+Compile it:
+- ghc hamiltonian.hs
+
+It should generate a binary called hamiltonian

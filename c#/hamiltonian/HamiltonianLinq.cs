@@ -6,56 +6,60 @@ using static System.Array;
 
 namespace hamiltonian
 {
-    public class Hamiltonian
+    public class HamiltonianLinq
     {
         private Dictionary<string, List<string>> _usa;
         private Array _easternStates;
         private Stack<string> _journey;
         
-        public Hamiltonian()
+        private ISet<string> visited = new HashSet<string>();
+
+        public HamiltonianLinq()
         {
             InitialiseStates();
             ReduceGraph();
         }
 
         private void ReduceGraph() {
-                    var eastern = (IList) _easternStates;
-                    _usa = _usa
-                        .Select(e => new {state = e.Key, neighbours = e.Value.Select(t => t).Where(t => eastern.Contains(t)).ToList()})
-                        .Where(t => eastern.Contains(t.state))
-                        .GroupBy(t => t.state, t => t.neighbours)
-                        .ToDictionary(t => t.Key, t => t.SelectMany(tt => tt).ToList())
-                        ;
-                }
-
-
-        public void PrintGraph() {
-            foreach (var (state, neighbours) in _usa) {
-                Console.WriteLine($"{state}: {String.Join(", ", neighbours)}");
-            }
+            var eastern = (IList) _easternStates;
+            _usa = _usa
+                .Select(e => new {state = e.Key, neighbours = e.Value.Select(t => t).Where(t => eastern.Contains(t)).ToList()})
+                .Where(t => eastern.Contains(t.state))
+                .GroupBy(t => t.state, t => t.neighbours)
+                .ToDictionary(t => t.Key, t => t.SelectMany(tt => tt).ToList())
+                ;
         }
+
+//        public void PrintGraph() {
+//            foreach (var (state, neighbours) in _usa) {
+//                Console.WriteLine($"{state}: {String.Join(", ", neighbours)}");
+//            }
+//        }
 
         public void FindHamiltonian(string start) {
             _journey = new Stack<string>(26);
-            
+            visited.Clear();
             if (!FindHamiltonianRecursively(start)) {
                 Console.WriteLine("No hamiltonian path found.");
             }
         }
         private bool FindHamiltonianRecursively(string current) {
             _journey.Push(current);
+            visited.Add(current);
 
             if (_journey.Count == _usa.Count) {
                 Console.WriteLine(String.Join("->", _journey.Reverse()));
                 return true;
             } else {
                 foreach (var neighbour in _usa[current]) {
-                    if (_journey.Contains(neighbour)) continue;
+                    //if (_journey.Contains(neighbour)) continue;
+                    if (visited.Contains(neighbour)) continue;
                     if (FindHamiltonianRecursively((neighbour))) return true;
                 }
             }
 
             _journey.Pop();
+            visited.Remove(current);
             return false;
         }
         
@@ -85,8 +89,8 @@ namespace hamiltonian
                 {"la", new List<string> {"ar", "tx", "ms"}},
                 {"wi", new List<string> {"mn", "ia", "il"}},
                 {"il", new List<string> {"wi", "ia", "mo", "ky", "in"}},
-                {"tn", new List<string> {"ky", "mo", "ar", "ms", "al", "ga", "nc", "va"}},
-                {"ms", new List<string> {"tn", "ar", "la", "al"}},
+                {"tn", new List<string> {"ky", "mo", "ar", "ms", "al", "ga", "nc", "va", "ky"}},
+                {"ms", new List<string> {"tn", "ar", "la"}},
                 {"mi", new List<string> {"in", "oh"}},
                 {"in", new List<string> {"mi", "il", "ky", "oh"}},
                 {"ky", new List<string> {"oh", "in", "il", "mo", "tn", "va", "wv"}},

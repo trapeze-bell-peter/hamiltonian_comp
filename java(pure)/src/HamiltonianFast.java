@@ -1,95 +1,126 @@
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class Hamiltonian {
+public class HamiltonianFast {
 
-    private Map<String, List<String>> usa;
-    private List<String> easternStates;
+    private static Map<String, List<String>> usa;
+    private static List<String> easternStates;
+    private Map<String, Integer> stateToIndex;
+    private String[] indexToState;
 
-    private List<String> journey = new ArrayList<>();
-    private Map<String, List<String>> graph = new HashMap<>();
+    static {
+        initialiseStates();
+    }
+
+    private final int journeySize;
+    private long[] graph;
+
+    private static class SimpleLinkedList {
+        int size;
+        int value;
+        SimpleLinkedList next;
+
+        public SimpleLinkedList(int value, SimpleLinkedList next) {
+            this.value = value;
+            this.next = next;
+            this.size = 1 + (next == null ? 0 : next.size);
+        }
+
+    }
 
     public static void main(String[] args) {
+        HamiltonianFast h = new HamiltonianFast(true);
         for (int i = 0; i < 30; ++i) {
-            Hamiltonian h = new Hamiltonian();
             h.findHamiltonian("wdc");
-            System.out.println();
         }
         long sum = 0;
         int count = 10;
         String st = args.length == 0 ? "wdc" : args[0];
+        System.out.println(h.findHamiltonian(st));
         for (int i = 0; i < count; ++i) {
-            Hamiltonian h = new Hamiltonian();
             long start = System.nanoTime();
             h.findHamiltonian(st);
-            System.out.println();
-            sum += System.nanoTime() - start;
+            long end = System.nanoTime();
+            sum += end - start;
+            System.gc();
         }
-        System.out.println("average: " + TimeUnit.NANOSECONDS.toMillis(sum / count) + "ms");
+        System.out.println("average: " + TimeUnit.NANOSECONDS.toMicros(sum / count) + "us");
     }
 
-    public Hamiltonian() {
-        initialiseStates();
-        this.graph.putAll(usa);
-        this.reduceGraph(easternStates);
-//        this.checkGraph();
+    public HamiltonianFast(boolean reduce) {
+        Map<String, List<String>> copy = reduceGraph(usa, reduce ? easternStates : usa.keySet());
+        graph = buildFrom(copy);
+        this.journeySize = copy.size();
     }
 
-    private void reduceGraph(List<String> statesToVisit) {
+    private long[] buildFrom(Map<String, List<String>> copy) {
+        stateToIndex = new HashMap<>();
+        indexToState = new String[copy.size()];
+        for (String state : copy.keySet()) {
+            int index = stateToIndex.size();
+            stateToIndex.put(state, index);
+            indexToState[index] = state;
+        }
+        long[] m = new long[copy.size()];
+        for (Entry<String, List<String>> entry : copy.entrySet()) {
+            int[] a = entry.getValue().stream().mapToInt(stateToIndex::get).toArray();
+            long key = 0;
+            for (int state : a) {
+                key |= 1L << state;
+            }
+            m[stateToIndex.get(entry.getKey())] = key;
+        }
+        return m;
+    }
+
+    private Map<String, List<String>> reduceGraph(Map<String, List<String>> copy, Collection<String> statesToVisit) {
         Map<String, List<String>> reducedGraph = new HashMap<>();
-        for (String state : this.graph.keySet()) {
-            if (statesToVisit.indexOf(state) >= 0) {
-                List<String> neighbours = this.graph.get(state).stream().filter(
-                        s -> statesToVisit.indexOf(s) >= 0).collect(Collectors.toList());
-                reducedGraph.put(state, neighbours);
-            }
-        }
-        this.graph = reducedGraph;
-    }
-//
-//    private void checkGraph() {
-//        for (Map.Entry<String, List<String>> entry : this.graph.entrySet()) {
-//            for (String neighbour : entry.getValue()) {
-//                if (this.graph.get(neighbour) == null) {
-//                    System.out.println("No graph entry for " + neighbour);
-//                } else if (this.graph.get(neighbour).indexOf(entry.getKey()) < 0) {
-//                    System.out.println(entry.getKey() + " -> " + neighbour + " exists, but not " + neighbour + " -> " + entry.getKey());
-//                }
-//            }
-//        }
-//    }
-
-    private void findHamiltonian(String start) {
-        if (!this.findHamiltoniamRecursively(start)) {
-            System.out.println("No hamiltonian path found.");
-        }
-    }
-
-    private boolean findHamiltoniamRecursively(String current) {
-        journey.add(current);
-
-        if (journey.size() == graph.size()) {
-            for (String state : journey) {
-                System.out.print(state + "->");
-            }
-            return true;
-        } else {
-            for (String neighbour : graph.get(current)) {
-                if (journey.indexOf(neighbour) < 0) {
-                    if (findHamiltoniamRecursively(neighbour)) {
-                        return true;
-                    }
+        for (String state : copy.keySet()) {
+            if (statesToVisit.contains(state)) {
+                List<String> neighbours = copy.get(state).stream().filter(
+                        s -> statesToVisit.contains(s)).collect(Collectors.toList());
+                if (!neighbours.isEmpty()) {
+                    reducedGraph.put(state, neighbours);
                 }
             }
         }
+        return reducedGraph;
 
-        journey.remove(journey.size() - 1);
-        return false;
     }
 
+    private String[] findHamiltonian(String start) {
+        return this.findHamiltoniamRecursively(stateToIndex.get(start), null, 0);
+    }
 
-    private void initialiseStates() {
+    private String[] findHamiltoniamRecursively(int index, SimpleLinkedList list, long visited) {
+        SimpleLinkedList ll = new SimpleLinkedList(index, list);
+        long v2 = visited | (1L << index);
+        if (ll.size == journeySize) {
+            String[] r = new String[journeySize];
+            int i = 0;
+            while (ll != null) {
+                r[i++] = indexToState[ll.value];
+                ll = ll.next;
+            }
+            return r;
+        } else {
+            long toVisit = graph[index] & ~v2;
+            while (toVisit != 0) {
+                int next = Long.numberOfTrailingZeros(toVisit);
+                String[] r = findHamiltoniamRecursively(next, ll, v2);
+                if (r != null) {
+                    return r;
+                }
+                toVisit = toVisit & ~(1L << next);
+
+            }
+        }
+        return null;
+    }
+
+    private static void initialiseStates() {
         usa = new HashMap<>();
         usa.put("wa", Arrays.asList("or", "id"));
         usa.put("or", Arrays.asList("wa", "id", "nv", "ca"));
