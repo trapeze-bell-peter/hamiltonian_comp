@@ -110,12 +110,17 @@ class Hamiltonian {
   }
 }
 
-void main() {
+void main(List<String> arguments) {
+  String starting = 'wdc';
+  if (arguments.length>0) {
+    starting = arguments[0];
+  }
   var hamiltonian = new Hamiltonian();
+
   for(int i=0; i<30; i++) {
     var stopwatch = Stopwatch();
     stopwatch.start();
-    hamiltonian.FindHamiltonian('wdc');
+    hamiltonian.FindHamiltonian(starting);
     stopwatch.stop();
     Duration duration = stopwatch.elapsed;
     print("Duration: " + duration.toString() + "     " + hamiltonian.result());
