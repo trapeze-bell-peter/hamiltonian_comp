@@ -43,9 +43,8 @@ class Hamiltonian {
   }
 
   void ReduceGraph() {
-    Map<String,List<String>> _reduced = {};
-    _easternStates.forEach( (s) => _reduced[s] = _usa[s]);
-    _usa = _reduced;
+    _usa.removeWhere( (s,k) => !_easternStates.contains(s));
+    _usa.forEach( (s,k) => k.removeWhere( (x) => !_easternStates.contains(x)));
   }
 
   void InitialiseStates() {
@@ -115,6 +114,7 @@ void main(List<String> arguments) {
   if (arguments.length>0) {
     starting = arguments[0];
   }
+  print("Starting at:" + starting);
   var hamiltonian = new Hamiltonian();
 
   for(int i=0; i<30; i++) {
